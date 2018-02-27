@@ -17,7 +17,6 @@ var rootCmd = &cobra.Command{
 	Long: `A convenient and beautiful code record website
 						and learn golang.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		OpenServer()
 	},
 }
 
@@ -32,12 +31,13 @@ func initConfig() {
 	viper.SetConfigName("config")
 	viper.AddConfigPath(cfgFile)
 	if err := viper.ReadInConfig(); err != nil {
-		fmt.Println("error:", err)
+		fmt.Println("[Read config error]: ", err)
 		return
 	}
 
-	fmt.Println("using config file", viper.ConfigFileUsed())
+	fmt.Println("[Using config file]: ", viper.ConfigFileUsed())
 
+	// 监听配置文件变化
 	viper.WatchConfig()
 	viper.OnConfigChange(func(e fsnotify.Event) {
 		fmt.Println("config changed")
@@ -47,6 +47,10 @@ func initConfig() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
+	rootCmd.PersistentFlags().Bool("debug", true, "enable/disable debug mode")
+
 	viper.BindPFlags(rootCmd.PersistentFlags())
 	viper.BindPFlags(rootCmd.Flags())
+
+	rootCmd.AddCommand(serverCmd)
 }

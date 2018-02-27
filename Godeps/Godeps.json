@@ -4,6 +4,11 @@
 	"GodepVersion": "v80",
 	"Deps": [
 		{
+			"ImportPath": "github.com/asaskevich/govalidator",
+			"Comment": "v8-18-g4b3d68f",
+			"Rev": "4b3d68f87f176641ffc147420296013aff66ea32"
+		},
+		{
 			"ImportPath": "github.com/fsnotify/fsnotify",
 			"Comment": "v1.4.7",
 			"Rev": "c2828203cd70a50dcccfb2761f8b1f8ceef9a8e9"
@@ -54,9 +59,34 @@
 			"Rev": "76626ae9c91c4f2a10f34cad8ce83ea42c93bb75"
 		},
 		{
+			"ImportPath": "github.com/labstack/echo",
+			"Comment": "3.2.6-29-g3641cbc",
+			"Rev": "3641cbcdada3c75513ebb4d039de57333bfe413a"
+		},
+		{
+			"ImportPath": "github.com/labstack/gommon/color",
+			"Comment": "0.2.3-2-g058e16e",
+			"Rev": "058e16e77bbd66cc101dfeae2971b88add6ce266"
+		},
+		{
+			"ImportPath": "github.com/labstack/gommon/log",
+			"Comment": "0.2.3-2-g058e16e",
+			"Rev": "058e16e77bbd66cc101dfeae2971b88add6ce266"
+		},
+		{
 			"ImportPath": "github.com/magiconair/properties",
 			"Comment": "v1.7.6-3-g2c9e950",
 			"Rev": "2c9e9502788518c97fe44e8955cd069417ee89df"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-colorable",
+			"Comment": "v0.0.9-13-g7dc3415",
+			"Rev": "7dc3415be66d7cc68bf0182f35c8d31f8d2ad8a7"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-isatty",
+			"Comment": "v0.0.3-7-g6ca4dbf",
+			"Rev": "6ca4dbf54d38eea1a992b3c722a76a5d1c4cb25c"
 		},
 		{
 			"ImportPath": "github.com/mitchellh/mapstructure",
@@ -100,6 +130,22 @@
 			"ImportPath": "github.com/spf13/viper",
 			"Comment": "v1.0.0-6-gaafc9e6",
 			"Rev": "aafc9e6bc7b7bb53ddaa75a5ef49a17d6e654be5"
+		},
+		{
+			"ImportPath": "github.com/valyala/bytebufferpool",
+			"Rev": "e746df99fe4a3986f4d4f79e13c1e0117ce9c2f7"
+		},
+		{
+			"ImportPath": "github.com/valyala/fasttemplate",
+			"Rev": "dcecefd839c4193db0d35b88ec65b4c12d360ab0"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/acme",
+			"Rev": "49796115aa4b964c318aad4f3084fdb41e9aa067"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/acme/autocert",
+			"Rev": "49796115aa4b964c318aad4f3084fdb41e9aa067"
 		},
 		{
 			"ImportPath": "golang.org/x/sys/unix",

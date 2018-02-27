@@ -4,34 +4,36 @@ import (
 	"fmt"
 
 	"github.com/labstack/echo"
+	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"nightcode/controllers"
-	"nightcode/mongo"
+	"nightcode/model"
+	"nightcode/routes"
 )
 
+var serverCmd = &cobra.Command{
+	Use:   "server",
+	Short: "Run server",
+	Long:  `Use echo library to run a server.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		OpenServer()
+	},
+}
+
 func OpenServer() {
-	// 链接数据库 "mongo/mongo.go"
-	go mongo.LinkDb()
-	defer mongo.CloseDb()
+	// 链接数据库
+	go model.LinkDb()
+	defer model.CloseDb()
 
 	e := echo.New()
 
+	e.Debug = viper.GetBool("debug")
+
+	// 自定义错误处理
+	e.HTTPErrorHandler = controllers.HttpErrorHandler
+
 	// 处理请求
-	e.POST("/addUser", controllers.HandleAddUser)
-	e.GET("/users", controllers.HandleGetUsers)
-
-	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
-		return func(c echo.Context) error {
-			// Extract the credentials from HTTP request header and perform a security
-			// check
-
-			// For invalid credentials
-			// return echo.NewHTTPError(http.StatusUnauthorized, "Please provide valid credentials")
-
-			// For valid credentials call next
-			return next(c)
-		}
-	})
+	routes.AddUserRoutes(e)
 
 	// 开启服务器
 	port := viper.GetString("server.port")

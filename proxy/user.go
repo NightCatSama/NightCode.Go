@@ -1,53 +1,39 @@
 package proxy
 
 import (
-	"fmt"
 	"gopkg.in/mgo.v2/bson"
+	"time"
 
-	"nightcode/mongo"
+	"nightcode/model"
 )
 
-type User struct {
-	Account  string `json:"account"`
-	Password string `json:"password"`
-}
-
 // 添加用户
-func AddUser(account string, password string) error {
-	if mongo.UserCollection == nil {
-		return fmt.Errorf("未连接数据库")
-	}
-
-	if _, err := GetUserByAccount(account); err == nil {
-		return fmt.Errorf("用户已存在")
-	}
-
-	err := mongo.UserCollection.Insert(&User{account, password})
+func AddUser(u *model.User) error {
+	err := model.UserCollection.Insert(&model.User{
+		Account:    u.Account,
+		Password:   u.Password,
+		Email:      u.Email,
+		CreateTime: time.Now(),
+	})
 	return err
 }
 
 // 获取用户列表
-func GetUSers() ([]User, error) {
-	users := []User{}
-	if mongo.UserCollection == nil {
-		return users, fmt.Errorf("未连接数据库")
-	}
-	err := mongo.UserCollection.Find(bson.M{}).All(&users)
+func GetUsers() ([]model.User, error) {
+	users := []model.User{}
+	err := model.UserCollection.Find(bson.M{}).All(&users)
 	return users, err
 }
 
 // 根据账号搜索用户
-func GetUserByAccount(account string) (User, error) {
-	user := User{}
-	if mongo.UserCollection == nil {
-		return user, fmt.Errorf("未连接数据库")
-	}
-	err := mongo.UserCollection.Find(bson.M{"account": account}).One(&user)
+func GetUserByAccount(account string) (model.User, error) {
+	user := model.User{}
+	err := model.UserCollection.Find(bson.M{"account": account}).One(&user)
 	return user, err
 }
 
 // 删除用户
 func RmoveUserByAccount(account string) error {
-	err := mongo.UserCollection.Remove(bson.M{"account": account})
+	err := model.UserCollection.Remove(bson.M{"account": account})
 	return err
 }
