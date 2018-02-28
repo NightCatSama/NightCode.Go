@@ -18,9 +18,9 @@ func HandleGetUsers(c echo.Context) error {
 	users, err := proxy.GetUsers()
 	if err != nil {
 		return Error(c, "查询失败", nil, nil)
-	} else {
-		return Success(c, "查询成功", users)
 	}
+
+	return Success(c, "查询成功", users)
 }
 
 // 添加用户
@@ -39,14 +39,15 @@ func HandleAddUser(c echo.Context) error {
 		return Error(c, "用户已存在", nil, nil)
 	}
 
-	err := proxy.AddUser(&model.User{
+	u := &model.User{
 		Account:  params.Account,
 		Password: params.Password,
 		Email:    params.Email,
-	})
-	if err != nil {
-		return Error(c, "添加失败", nil, err.Error())
-	} else {
-		return Success(c, "添加成功", nil)
 	}
+
+	if err := proxy.AddUser(u); err != nil {
+		return Error(c, "添加失败", nil, err.Error())
+	}
+
+	return Success(c, "添加成功", nil)
 }
